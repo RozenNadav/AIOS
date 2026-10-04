@@ -1,0 +1,28 @@
+name: assemble-cog
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'kernel/src/.cog.b64.*'
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble cog.rs
+        run: |
+          set -euo pipefail
+          cat kernel/src/.cog.b64.* | tr -d '\n' | base64 -d > kernel/src/cog.rs
+          SIZE=$(wc -c < kernel/src/cog.rs)
+          HASH=$(sha256sum kernel/src/cog.rs | awk '{print $1}')
+          echo "size=$SIZE hash=$HASH"
+          test "$SIZE" -eq 51642
+          test "$HASH" = "b1cc84f87987fde79629c454d91a4855796e53d371276e0e659a343424606e1a"
+          rm -f kernel/src/.cog.b64.* kernel/src/.cog.part* kernel/src/_size_probe*.rs
+          git config user.name "aios-bot"
+          git config user.email "aios-bot@users.noreply.github.com"
+          git add -A
+          git commit -m "Assemble kernel/src/cog.rs from base64 parts" || exit 0
+          git push
