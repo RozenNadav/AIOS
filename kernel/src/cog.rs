@@ -1,1 +1,1 @@
-@/tmp/cog_plain.rs
+file:///tmp/cog_plain.rs
