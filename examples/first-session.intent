@@ -1,0 +1,10 @@
+# AIOS first developer session — feed lines to: cargo run -- intent <line>
+attend status
+spawn builder :: compile workspace crates
+spawn linter :: scan for intent hygiene
+weave roadmap | plan | DevCore → Tooling → Hosted → Consumer
+note AIOS is not Unix and not Windows
+query plan
+tick
+tick
+status

@@ -1,0 +1,20 @@
+[package]
+name = "aios"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "AIOS developer intent shell"
+
+[[bin]]
+name = "aios"
+path = "src/main.rs"
+
+[dependencies]
+aios-kernel = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+clap = { workspace = true }
+colored = { workspace = true }
+anyhow = { workspace = true }
+chrono = { workspace = true }
+dirs = { workspace = true }

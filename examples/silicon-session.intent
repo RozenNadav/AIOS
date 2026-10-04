@@ -1,0 +1,16 @@
+# AIOS Silicon Lattice — NVIDIA GPU + AMD chip session
+silicon probe
+silicon declare nvidia gpu rtx0 24576 128 :: NVIDIA GeForce RTX 4090
+silicon declare amd cpu zen0 65536 32 :: AMD Ryzen 9 7950X
+silicon declare amd gpu rx0 16384 96 :: AMD Radeon RX 7900 XTX
+silicon list
+spawn trainer :: fine-tune LLM on CUDA
+silicon bind trainer rtx0
+silicon accel trainer matmul batch-1024
+silicon unbind trainer
+silicon bind trainer zen0
+silicon accel trainer tokenize corpus
+silicon bind trainer rx0
+silicon accel trainer hip-gemm layer-norm
+explain silicon
+status
